@@ -55,10 +55,13 @@ Create an Express server
 - `npm install express`
 - Add bare minimum JavaScript to `server.js` to get server running.
 
-        const express = require('express');
-        const PORT = 3000;
-        const app = express();
-        app.listen(PORT, () => console.log('Listening on PORT', PORT));
+```
+const express = require('express');
+const PORT = 3000;
+const app = express();
+app.listen(PORT, 
+	() => console.log('Listening on PORT', PORT));
+```
     
 - From terminal run `nodemon server.js`
 	- Confirm terminal output shows `Listening on PORT 3000`
@@ -96,61 +99,86 @@ Connect to Database
 
 Add GET /treats route
 
-    app.get('/treats', (request, response) => {
+```    
+app.get('/treats', (request, response) => {
     
-        client.query('SELECT * FROM treats;')
-            .then(results => response.send(results.rows))
-            .catch(err => response.status(500).send(err));
-    });
+	client.query('SELECT * FROM treats;')
+		.then(results => response.send(results.rows))
+		.catch(err => response.status(500).send(err));
+});
+```    
+    
 - confirm that server responds with [] using the testing tool of your choice
 
 Add POST /treats route
 
 -   add middleware to parse request body
 
-        app.use(express.urlencoded({extended:true}));
-        app.use(express.json());
-        
-- Add post route handler
+```
+app.use(express.urlencoded({extended:true}));
+app.use(express.json());
+```        
 
-        app.post('/treats', (request, response) => {
-        client.query(`
-            INSERT INTO treats (name, description) VALUES('${request.body.name}', '${request.body.description}');
-            `).then(results =>response.sendStatus(200));
-            }).catch(err => response.status(500).send(err));
-	- Confirm that post route properly adds treat.
-- Add PUT route handler
+Add post route handler
 
-        app.put('/treats/:id', (request, response) => {
-            client.query(`UPDATE treats SET name=$1, description=$2 WHERE id=$3;`, 
-            [
-            request.body.name,
-            request.body.description,
-            request.params.id
-            ]).then(results => response.sendStatus(200));
-            }).catch(err => response.status(500).send(err));
-            
-    - make PUT request to update a record using testing tool of your choice
-    - confirm that record has been updated by making request to GET treats and checking response
+```
+app.post('/treats', (request, response) => {
+	client.query(`
+		INSERT INTO treats (name, description) 
+		VALUES('${request.body.name}', '${request.body.description}');
+	`)
+	.then(results => response.sendStatus(200))
+	.catch(err => response.status(500).send(err));
+});
+```
+
+- Confirm that post route properly adds treat.
+
+
+Add PUT route handler
+
+```
+app.put('/treats/:id', (request, response) => {
+    client.query(`
+	    UPDATE treats SET name=$1, description=$2 WHERE id=$3;
+		`, 
+    [
+        request.body.name,
+        request.body.description,
+        request.params.id
+    ])
+    .then(results => response.sendStatus(200))
+    .catch(err => response.status(500).send(err));
+});
+```
+- make PUT request to update a record using testing tool of your choice
+- confirm that record has been updated by making request to GET treats and checking response
 
 Add DELETE route
 
-    app.delete('/treats/:id', (request, response) => {
-    client.query(`DELETE from treats WHERE id=${request.params.id}`)
-        .then(results => response.sendStatus(200))
-        .catch(err => response.status(500).send(err));
-    });
+```
+app.delete('/treats/:id', (request, response) => {
+	client.query(`
+		DELETE from treats WHERE id=${request.params.id};
+	`)
+	.then(results => response.sendStatus(200))
+	.catch(err => response.status(500).send(err));
+});
+```
 - Make an http request to delete record
 - Confirm that record has been deleted
 
 Add GET single treat route
 
-    app.get('/treats/:id', (request, response) => {
-
-        client.query(`SELECT * FROM treats WHERE id=${request.params.id};`)
-          .then(results => response.send(results.rows[0]))
-          .catch(err => response.status(500).send(err));
-    });
+```
+app.get('/treats/:id', (request, response) => {
+	client.query(`
+		SELECT * FROM treats WHERE id=${request.params.id};
+	`)
+	.then(results => response.send(results.rows[0]))
+	.catch(err => response.status(500).send(err));
+});
+```    
 - Note: the response is single treat record, not an array.
 
 ## Congratulations, server is done! 
