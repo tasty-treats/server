@@ -91,10 +91,14 @@ Connect to Database
 - `npm install pg`
 	- add `DATABASE_URL` to `.env` file with path to your local Postgres database
 		- On my Mac this is `postgres://localhost/tasty_treats` but exact path varies by operating system. 
-	- add `const pg = require('pg');` to `server.js`
-	- add `const client = new pg.Client(process.env.DATABASE_URL);` to `server.js`
-	- add `client.connect();` on next line.
-	- add `client.on('error', err => console.error(err));` on next line.
+	- add below code block `server.js`
+	
+```
+const pg = require('pg');
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.error(err));
+```
 
 
 Add GET /treats route
