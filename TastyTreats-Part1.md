@@ -108,7 +108,7 @@ Add POST /treats route
 
 -   add middleware to parse request body
 
-        app.use(express.urlencoded({urlencoded:true}));
+        app.use(express.urlencoded({extended:true}));
         app.use(express.json());
         
 - Add post route handler
