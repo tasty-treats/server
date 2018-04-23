@@ -99,8 +99,9 @@ Add GET /treats route
     app.get('/treats', (request, response) => {
     
         client.query('SELECT * FROM treats;')
-            .then(results =>    response.send(results.rows))
-    }).catch(err => response.status(500).send(err));
+            .then(results => response.send(results.rows))
+            .catch(err => response.status(500).send(err));
+    });
 - confirm that server responds with [] using the testing tool of your choice
 
 Add POST /treats route
