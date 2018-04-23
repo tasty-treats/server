@@ -54,10 +54,11 @@ Create an Express server
 - We're eventually going to use several NPM packages but let's start with the bare minimum
 - `npm install express`
 - Add bare minimum JavaScript to `server.js` to get server running.
-	-     ```const express = require('express');
-    const PORT = 3000;
-    const app = express();
-    app.listen(PORT, () => console.log('Listening on PORT', PORT));```
+
+        const express = require('express');
+        const PORT = 3000;
+        const app = express();
+        app.listen(PORT, () => console.log('Listening on PORT', PORT));
     
 - From terminal run `nodemon server.js`
 	- Confirm terminal output shows `Listening on PORT 3000`
