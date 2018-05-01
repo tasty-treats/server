@@ -1,3 +1,9 @@
 language: node_js
 node_js:
-  - "stable"
+  - 'stable'
+before_script: npm i
+env:
+  port: 3000
+script:
+  - node index &
+  - npm test
