@@ -5,5 +5,5 @@ before_script: npm i
 env:
   port: 3000
 script:
-  - node index &
+  - node server &
   - npm test
